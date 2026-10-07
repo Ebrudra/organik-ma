@@ -11,6 +11,20 @@ describe("typed catalog", () => {
     expect(Math.min(...h.map((p) => p.price))).toBe(30);
     expect(Math.max(...h.map((p) => p.price))).toBe(200);
   });
+  it("preserves prior SKU meaning while replacing guessed honey and prices with recovered data", () => {
+    expect(catalog.find((p) => p.id === "miel-4")).toMatchObject({
+      variant: "Thym",
+      price: 135,
+    });
+    expect(catalog.find((p) => p.id === "miel-tournesol")).toMatchObject({
+      variant: "Tournesol",
+      price: 60,
+    });
+    expect(sanitizeCart([{ id: "miel-10", quantity: 1 }])).toEqual([]);
+    expect(
+      catalog.filter((p) => p.category === "olive").map((p) => p.price),
+    ).toEqual([75, 75]);
+  });
   it("normalizes accents and case in multi-word searches", () => {
     expect(normalize(" COSMÉTIQUE ")).toBe("cosmetique");
     expect(

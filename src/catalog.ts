@@ -18,21 +18,21 @@ export const categoryNames: Record<Category, string> = {
   argan: "Huiles d’argan",
   amlou: "Amlou",
 };
-const honey: [string, number][] = [
-  ["Fleurs", 30],
-  ["Oranger", 50],
-  ["Eucalyptus", 60],
-  ["Thym", 100],
-  ["Romarin", 70],
-  ["Lavande", 80],
-  ["Caroubier", 90],
-  ["Jujubier", 150],
-  ["Euphorbe", 200],
-  ["Montagne", 120],
+const honey: [string, number, string][] = [
+  ["Fleurs", 30, "miel-1"],
+  ["Oranger", 45, "miel-2"],
+  ["Eucalyptus", 55, "miel-3"],
+  ["Tournesol", 60, "miel-tournesol"],
+  ["Romarin", 75, "miel-5"],
+  ["Caroubier", 90, "miel-7"],
+  ["Lavande", 110, "miel-6"],
+  ["Thym", 135, "miel-4"],
+  ["Euphorbe", 165, "miel-9"],
+  ["Jujubier", 200, "miel-8"],
 ];
 export const catalog: Product[] = [
-  ...honey.map(([variant, price], i) => ({
-    id: `miel-${i + 1}`,
+  ...honey.map(([variant, price, id]) => ({
+    id,
     category: "miel" as const,
     name: `Miel de ${variant.toLowerCase()}`,
     variant,
@@ -40,7 +40,7 @@ export const catalog: Product[] = [
     price,
     size: "250 g",
     provisional: true,
-    image: "/assets/miel.svg",
+    image: "/assets/original/miel.png",
     description:
       "Un miel à découvrir à la cuillère, sur une tartine ou dans une recette. La variété, la provenance et le tarif restent à confirmer avant la vente.",
     usage: "alimentaire" as const,
@@ -50,11 +50,12 @@ export const catalog: Product[] = [
       id: `argan-${variant.toLowerCase()}-${origin.toLowerCase()}`,
       category: "argan" as const,
       name: `Huile d’argan ${variant.toLowerCase()}`,
-      variant,
+      variant: variant === "Culinaire" ? "Alimentaire" : variant,
       origin,
       price: variant === "Culinaire" ? 180 : 170,
       provisional: false,
-      image: "/assets/argan.svg",
+      size: "250 ml",
+      image: "/assets/original/argan.png",
       description:
         variant === "Culinaire"
           ? "Une huile destinée à l’alimentation, à utiliser en finition selon les indications du producteur."
@@ -71,9 +72,10 @@ export const catalog: Product[] = [
     name: "Huile d’olive",
     variant: i ? "Moyen Atlas" : "Haut Atlas",
     origin,
-    price: i ? 90 : 100,
+    price: 75,
     provisional: true,
-    image: "/assets/olive.svg",
+    size: "250 ml",
+    image: "/assets/original/olive.png",
     description:
       "Une huile à retrouver dans une salade ou à table. L’association région/origine, le conditionnement et le tarif sont à confirmer.",
     usage: "alimentaire" as const,
@@ -82,11 +84,12 @@ export const catalog: Product[] = [
     id: `amlou-${origin.toLowerCase()}`,
     category: "amlou" as const,
     name: "Amlou",
-    variant: "Amlou",
+    variant: "Amandes, miel & argan",
     origin,
     price: 120,
     provisional: true,
-    image: "/assets/amlou.svg",
+    size: "250 g",
+    image: "/assets/original/amlou.png",
     description:
       "Une invitation au petit déjeuner marocain. Composition, allergènes, conditionnement et prix à confirmer auprès du producteur avant toute vente.",
     usage: "alimentaire" as const,

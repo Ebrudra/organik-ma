@@ -69,7 +69,7 @@ These endpoints and OAuth instructions were verified from Cloudflare's public Gi
 - https://github.com/cloudflare/mcp
 - https://github.com/cloudflare/mcp-server-cloudflare
 
-No Cloudflare account connection was available during preparation: `wrangler whoami` reported unauthenticated. No Worker has been published. Once you connect GitHub in the Cloudflare dashboard or authorize an account-capable MCP, the remaining steps are account creation/deployment and checking the real preview URL.
+No Cloudflare account connection was available during preparation: `wrangler whoami` reported unauthenticated. The user subsequently connected GitHub and reported a successful build at https://organik-ma.privatedriver.workers.dev/. No Cloudflare account MCP is attached here; Git pushes update the configured branch. Remote rendering remains unverified from this environment because of its network proxy.
 
 ## Validation in the cloud machine
 

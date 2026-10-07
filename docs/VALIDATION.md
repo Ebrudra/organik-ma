@@ -1,53 +1,31 @@
-# Executed validation
+# Restored storefront validation — 7 October 2026
 
-Validated on 7 October 2026 with Node 24.19.0, npm 11.9.0 and system Chromium in the connected cloud machine.
+Validated with Node 24.19.0, npm 11.9.0 and system Chromium.
 
-| Check                                                                     | Executed result                                |
-| ------------------------------------------------------------------------- | ---------------------------------------------- |
-| Frozen lockfile installation (`npm ci --cache /tmp/organik-npm`)          | Passed; install script rerun successfully      |
-| `npm run typecheck`                                                       | Passed                                         |
-| `npm test`                                                                | 6 tests passed, 0 failed/skipped               |
-| `npm run build`                                                           | Passed; Vite production bundle generated       |
-| `npm run test:browser`                                                    | 12 tests passed, 0 failed/skipped in final run |
-| Dev-server readiness (`npm run smoke`)                                    | Passed                                         |
-| Served production-bundle readiness (`ORGANIK_BASE_URL=... npm run smoke`) | Passed against Vite preview                    |
-| Production screenshots / overflow at 1440×1000 and 390×844                | Passed                                         |
-| `git diff --check`                                                        | Passed                                         |
+| Check                                                                      | Result                              |
+| -------------------------------------------------------------------------- | ----------------------------------- |
+| TypeScript (`npm run typecheck`)                                           | Passed                              |
+| Catalog/cart unit tests (`npm test`)                                       | 7 passed                            |
+| Production build (`npm run build`)                                         | Passed                              |
+| Desktop/mobile Playwright (`npm run test:browser`)                         | 16 passed, 0 failed/skipped         |
+| Functional smoke against development and served production bundle          | Passed                              |
+| Cloudflare build and Wrangler deployment dry run (`npm run cf:check`)      | Passed                              |
+| Production/reference screenshots; decoded images, page errors and overflow | Passed at 1440 × 1000 and 390 × 664 |
+| Whitespace/diff check                                                      | Passed                              |
 
-The six unit tests exercise unique IDs/counts, honey sizes and price range, accent-insensitive search, combined category/origin filters, sorting, reset/empty results, all four argan identities, quantities, totals and malformed persisted carts.
+The original reference was rendered locally from the user-supplied saved HTML, original CSS and recovered PNGs. Platform scripts, challenge code and the original order endpoint were excluded. No certificate restrictions were bypassed. Comparable screenshots:
 
-Playwright ran desktop (1440×1000) and iPhone 13 Chromium-emulated mobile (390×664) projects. Each project executed six meaningful browser scenarios:
+| Page             | Desktop                                        | Mobile                                        |
+| ---------------- | ---------------------------------------------- | --------------------------------------------- |
+| Saved reference  | [Reference](screenshots/reference-desktop.png) | [Reference](screenshots/reference-mobile.png) |
+| Rebuilt homepage | [Original](screenshots/home-desktop.png)       | [Original](screenshots/home-mobile.png)       |
+| Luna             | [Luna](screenshots/luna-desktop.png)           | [Luna](screenshots/luna-mobile.png)           |
+| Boutique         | [Boutique](screenshots/boutique-desktop.png)   | [Boutique](screenshots/boutique-mobile.png)   |
 
-1. Direct loading of both storefronts, boutique, About, blog, all six articles and a product detail; loaded images, no console/page errors and no horizontal overflow. Recipe ingredients/instructions and related product navigation were checked.
-2. Header/mobile menu navigation, both heroes' previous/next and arrow-key controls, rapid-input lock, reduced motion and keyboard focus on the skip link.
-3. Horizontal gesture direction and vertical gesture preservation. The mobile project additionally used native Chromium touch input to swipe forward/back and verify actual vertical page scrolling on **both** heroes.
-4. Accent-insensitive search, combined category/origin filters, empty state/reset and ascending/descending prices.
-5. Product-variant changes update price and SKU; culinary/cosmetic/origin variants remain separate in cart. Quantities, removal, totals, route sharing, reload persistence, Escape/focus restoration, browser-local demo request storage and an empty cart after submission were checked. No POST request occurred during demo submission.
-6. Axe WCAG A/AA checks on representative storefront, boutique, product and article routes, plus populated cart and demo form. Zero violations on checked states. Automated accessibility checks do not prove complete accessibility; no physical-phone or screen-reader session was performed.
+`docs/screenshots/reference-geometry.json` records measured rectangles. Header logo, hero, hero jar, collection and story block rectangles are identical between the sanitized saved homepage and the rebuilt production homepage at both sizes. This is evidence of matching layout geometry, not a pixel-identical claim: native select controls, accessible text contrast, icon details and demo interactions differ. No independently rendered current remote reference or remote Workers preview could be validated because of access restrictions.
 
-## Review screenshots
+Browser scenarios cover direct navigation across every page/article and product details; image decoding; console/page errors; horizontal overflow; links; focus; keyboard arrows; previous/next; rapid input lock; reduced motion; synthetic and native Chromium-emulated horizontal/vertical touch gestures; accent-insensitive search; combined category/origin filters; numeric sorting; empty/reset states; selected variant/price propagation from homepage to hero/dialog; distinct argan usage/origin cart lines; quantities, removal, totals and persistence; local demo saving with zero POST requests; six-second autoplay and manual pause; and selected axe WCAG checks including populated cart/form.
 
-These screenshots show the production rebuild. **No reference screenshots were accessible, so they do not establish visual parity.** Images were fully loaded and entrance animations settled before capture.
+The emulated mobile checks do not substitute for a physical phone. Screenshots of Luna use reduced motion to capture its settled layout; separate interaction tests exercise normal timing. Gallery and blog artwork/body recovery remains incomplete and documented in REBUILD-NOTES. Stock, ingredients, geographic origin labels and commercial specifications remain unverified, as in the recovered site's provisional catalog warning.
 
-- [Original desktop](screenshots/home-desktop.png)
-- [Original mobile](screenshots/home-mobile.png)
-- [Luna desktop](screenshots/luna-desktop.png)
-- [Luna mobile](screenshots/luna-mobile.png)
-- [Boutique desktop](screenshots/boutique-desktop.png)
-- [Boutique mobile](screenshots/boutique-mobile.png)
-
-## Investigated failures
-
-Initial checks found lazy images not loaded until scrolled into view, ambiguous select accessible names, a missing favicon and a prohibited decorative ARIA label. The image checks now scroll normally before assertions; selects have explicit accessible names; a local SVG favicon was added; decorative slide dots are hidden from the accessibility tree, while a separate live status announces slides. A footer-note contrast failure was corrected by darkening the shared muted text color. Quantity text uses ordinary accessible text rather than an unsupported label attribute. Entrance animations are allowed to settle before screenshot and contrast checks. These fixes preserve the assertions and feature behavior.
-
-An overlapping early test invocation reused the previous run's server, which then shut down. The final suite was run sequentially with its own server. Source editing/formatting during an earlier dev-server test run also caused a transient reload; final browser verification ran against settled files.
-
-## Unverified / external limitations
-
-The published reference failed HTTP proxy and browser trust checks, so original design/content/assets/cart behavior remain unknown. Authoritative WHO/AAD pages also returned proxy CONNECT 403; no product health claims or purported verified citations were substituted. GitHub Git push succeeded, but API/GraphQL access returned Forbidden and prevented automatic PR creation. No deployment, real payment, merchant submission, physical-phone test or new-task snapshot restoration was performed.
-
-## Cloudflare preview preparation
-
-On 7 October 2026, installed/pinned Wrangler 4.148.0 and added `wrangler.jsonc` for a separate `organik-ma-preview` asset-only Worker. Production build and deployment dry run passed. Local Workers runtime started on port 8787 and `npm run smoke` passed against it, including a directly loaded article, catalog search and cart price. No application code changed in this preparation, so the existing 12-browser-test results remain applicable; runtime-specific readiness was checked separately. Cloudflare account authentication is absent (`wrangler whoami`), and no public deployment was made. Setup, local sandbox accommodations and OAuth MCP instructions are in `docs/CLOUDFLARE-PREVIEW.md`.
-
-On the subsequent dashboard setup check, changed the Worker name to `organik-ma` to match the user-created Cloudflare Worker and revalidated the build/deployment dry run. A pushed commit on `rebuild/organik-storefront` can trigger the connected Git build when the branch setting is saved. Cloudflare build/deployment success remains unconfirmed until a new build completes.
+The user’s Cloudflare build previously succeeded. This machine checks the production bundle locally and the Wrangler configuration by dry run; the dashboard must confirm the next GitHub-triggered build. No deployment to the original ChatGPT Sites site or DNS change occurs.

@@ -62,7 +62,7 @@ test("direct routes, images, console, overflow and article links", async ({
   await page.locator(".product-card a").first().click();
   await expect(page).toHaveURL(/\/produit\//);
   await page.goto("/");
-  await page.waitForTimeout(800);
+  await page.waitForTimeout(1600);
   await checkImages(page);
   await page.evaluate(() => window.scrollTo(0, 0));
   await page.screenshot({
@@ -70,7 +70,7 @@ test("direct routes, images, console, overflow and article links", async ({
     fullPage: true,
   });
   await page.goto("/boutique");
-  await page.waitForTimeout(800);
+  await page.waitForTimeout(1600);
   await checkImages(page);
   await page.evaluate(() => window.scrollTo(0, 0));
   await page.screenshot({
@@ -96,11 +96,13 @@ test("navigation, keyboard and both hero controls guard rapid input", async ({
     await expect(hero.locator(".hero-copy h1")).toContainText("douceur");
     await hero.focus();
     await page.keyboard.press("ArrowRight");
-    await expect(hero.locator(".hero-copy h1")).toContainText("soleil");
-    await page.waitForTimeout(700);
+    await expect(hero.locator(".hero-copy h1")).toContainText(
+      "Le goût des choses simples",
+    );
+    await page.waitForTimeout(1600);
     await page.getByRole("button", { name: "Produit précédent" }).click();
     await expect(hero.locator(".hero-copy h1")).toContainText("douceur");
-    await page.waitForTimeout(700);
+    await page.waitForTimeout(1600);
     await page
       .getByRole("button", { name: "Produit suivant" })
       .evaluate((b: HTMLButtonElement) => {
@@ -113,10 +115,12 @@ test("navigation, keyboard and both hero controls guard rapid input", async ({
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/luna");
   await page.getByRole("button", { name: "Produit suivant" }).click();
-  await expect(page.locator(".hero-copy h1")).toContainText("soleil");
+  await expect(page.locator(".hero-copy h1")).toContainText(
+    "Le goût des choses simples",
+  );
   expect(
     await page
-      .locator(".hero-jar")
+      .locator(".current .hero-jar")
       .evaluate((e) => parseFloat(getComputedStyle(e).animationDuration)),
   ).toBeLessThan(0.01);
   await page.goto("/");
@@ -165,10 +169,10 @@ test("horizontal gestures advance and reverse while vertical gestures preserve s
   }
   await swipe(-100, 5);
   await expect(hero.locator(".slide-counter")).toContainText("02");
-  await page.waitForTimeout(700);
+  await page.waitForTimeout(1600);
   await swipe(100, 5);
   await expect(hero.locator(".slide-counter")).toContainText("01");
-  await page.waitForTimeout(700);
+  await page.waitForTimeout(1600);
   await swipe(-10, 150);
   await expect(hero.locator(".slide-counter")).toContainText("01");
   expect(await hero.evaluate((e) => getComputedStyle(e).touchAction)).toBe(
@@ -197,13 +201,13 @@ test("horizontal gestures advance and reverse while vertical gestures preserve s
     }
     for (const route of ["/", "/luna"]) {
       await page.goto(route);
-      await page.waitForTimeout(800);
+      await page.waitForTimeout(1600);
       await nativeSwipe(280, 540, -150, 0);
       await expect(hero.locator(".slide-counter")).toContainText("02");
-      await page.waitForTimeout(800);
+      await page.waitForTimeout(1600);
       await nativeSwipe(80, 540, 150, 0);
       await expect(hero.locator(".slide-counter")).toContainText("01");
-      await page.waitForTimeout(800);
+      await page.waitForTimeout(1600);
       await nativeSwipe(190, 560, 0, -250);
       await expect
         .poll(() => page.evaluate(() => window.scrollY))
@@ -241,6 +245,7 @@ test("variant identity, prices, quantities, removal, persistence and demo reques
   await page
     .getByRole("button", { name: "Ajouter au panier · 180 MAD" })
     .click();
+  await page.keyboard.press("Escape");
   await page
     .locator(".variant-links")
     .getByRole("link", { name: /Cosmétique · Agadir/ })
@@ -249,9 +254,10 @@ test("variant identity, prices, quantities, removal, persistence and demo reques
   await page
     .getByRole("button", { name: "Ajouter au panier · 170 MAD" })
     .click();
+  await page.keyboard.press("Escape");
   await page
     .locator(".variant-links")
-    .getByRole("link", { name: /Culinaire · Essaouira/ })
+    .getByRole("link", { name: /Alimentaire · Essaouira/ })
     .click();
   await page
     .getByRole("button", { name: "Ajouter au panier · 180 MAD" })
@@ -330,7 +336,7 @@ test("accessible page and dialog names, contrast and structure", async ({
     "/blog/amlou-maison",
   ]) {
     await page.goto(route);
-    await page.waitForTimeout(800);
+    await page.waitForTimeout(1600);
     const result = await new AxeBuilder({ page })
       .withTags(["wcag2a", "wcag2aa", "wcag21aa"])
       .analyze();
@@ -340,8 +346,7 @@ test("accessible page and dialog names, contrast and structure", async ({
   await page
     .getByRole("button", { name: "Ajouter au panier · 180 MAD" })
     .click();
-  await page.getByRole("button", { name: /Ouvrir le panier/ }).click();
-  await page.waitForTimeout(800);
+  await page.waitForTimeout(1600);
   const result = await new AxeBuilder({ page })
     .withTags(["wcag2a", "wcag2aa", "wcag21aa"])
     .analyze();

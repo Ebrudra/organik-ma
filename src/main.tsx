@@ -1,10 +1,4 @@
-import React, {
-  createContext,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { createRoot } from "react-dom/client";
 import {
   BrowserRouter,
@@ -34,16 +28,9 @@ import {
 } from "./cart";
 import { articles } from "./articles";
 import "./style.css";
-type ShopState = {
-  lines: CartLine[];
-  add: (id: string) => void;
-  change: (id: string, n: number) => void;
-  clear: () => void;
-  open: () => void;
-  announcement: string;
-};
-const Shop = createContext<ShopState>(null!);
-const useShop = () => useContext(Shop);
+import { Shop, useShop } from "./shop";
+import Storefront from "./Storefront";
+import { BrandedJar, productTitles, productThemes } from "./BrandedJar";
 const storageRead = (key: string) => {
   try {
     return JSON.parse(localStorage.getItem(key) || "[]");
@@ -75,6 +62,7 @@ function App() {
   }, []);
   const add = (id: string) => {
     setLines((l) => addLine(l, id));
+    setVisible(true);
     announce(`${catalog.find((p) => p.id === id)?.name} ajouté au panier`);
   };
   return (
@@ -158,319 +146,105 @@ function Header() {
   useEffect(() => setMenu(false), [loc.pathname]);
   return (
     <>
-      <a className="skip-link" href="#contenu">
+      <a className="skip" href="#contenu">
         Aller au contenu
       </a>
-      <div className="topbar">
-        Les saveurs du Maroc, simplement.{" "}
-        <span>Site de démonstration · prix à confirmer</span>
+      <div className="announcement">
+        Quatre essentiels. Toute une gourmandise.
       </div>
-      <header className="header">
-        <Link to="/" aria-label="Organik, accueil">
-          <img
-            className="logo"
-            src="/assets/logo.svg"
-            alt="Organik — les saveurs du Maroc"
-          />
+      <header>
+        <Link className="brand" to="/" aria-label="Organik, accueil">
+          <img src="/assets/original/logo.png" alt="organik.ma" />
         </Link>
-        <button
-          className="mobile-menu"
-          aria-expanded={menu}
-          aria-controls="navigation"
-          onClick={() => setMenu(!menu)}
-        >
-          {menu ? "Fermer" : "Menu"}
-        </button>
         <nav
           id="navigation"
-          className={menu ? "nav expanded" : "nav"}
+          className={menu ? "nav open" : "nav"}
           aria-label="Navigation principale"
         >
           <NavLink to="/" end>
-            Accueil
+            Original
           </NavLink>
+          <NavLink to="/luna">Luna</NavLink>
           <NavLink to="/boutique">La boutique</NavLink>
-          <NavLink to="/esprit-organik">L’esprit organik</NavLink>
           <NavLink to="/blog">Le journal</NavLink>
+          <NavLink to="/esprit-organik">L’esprit organik</NavLink>
         </nav>
-        <button
-          className="cart-button"
-          onClick={shop.open}
-          aria-label={`Ouvrir le panier, ${shop.lines.reduce((n, l) => n + l.quantity, 0)} articles`}
-        >
-          <svg width="20" height="24" viewBox="0 0 24 28" aria-hidden="true">
-            <path
-              d="M4 9h16l2 16H2L4 9Zm4 0V6a4 4 0 0 1 8 0v3"
+        <div className="header-actions">
+          <span className="locale">MAROC / MAD</span>
+          <button
+            className="bag"
+            onClick={shop.open}
+            aria-label={`Ouvrir le panier, ${shop.lines.reduce((n, l) => n + l.quantity, 0)} articles`}
+          >
+            <svg
+              width="20"
+              height="24"
+              viewBox="0 0 24 28"
               fill="none"
               stroke="currentColor"
               strokeWidth="1.4"
-            />
-          </svg>
-          <span>Panier</span>
-          <b>{shop.lines.reduce((n, l) => n + l.quantity, 0)}</b>
-        </button>
+              aria-hidden="true"
+            >
+              <path d="M4 9h16l2 16H2L4 9Zm4 0V6a4 4 0 0 1 8 0v3" />
+            </svg>
+            <span className="bag-label">Panier</span>
+            <b>{shop.lines.reduce((n, l) => n + l.quantity, 0)}</b>
+          </button>
+          <button
+            className="mobile-menu"
+            aria-label={menu ? "Fermer le menu" : "Menu"}
+            aria-expanded={menu}
+            aria-controls="navigation"
+            onClick={() => setMenu(!menu)}
+          >
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              aria-hidden="true"
+            >
+              <path
+                d={menu ? "m6 6 12 12M6 18 18 6" : "M4 5h16M4 12h16M4 19h16"}
+              />
+            </svg>
+          </button>
+        </div>
       </header>
-    </>
-  );
-}
-const heroProducts = [
-  catalog[0],
-  catalog.find((p) => p.id === "olive-agadir")!,
-  catalog.find((p) => p.id === "argan-culinaire-agadir")!,
-  catalog.find((p) => p.id === "amlou-agadir")!,
-];
-const heroCopy = [
-  {
-    word: "miel",
-    eyebrow: "LA DOUCEUR À L’ÉTAT SIMPLE",
-    title: "Un peu de douceur.\nBeaucoup de caractère.",
-    body: "À la cuillère, sur une tartine, dans vos recettes. Découvrez notre sélection de miels.",
-  },
-  {
-    word: "olive",
-    eyebrow: "LE GOÛT DES TERRES MAROCAINES",
-    title: "Le soleil s’invite\nà votre table.",
-    body: "Un filet d’huile, du pain et le plaisir des choses simples. Explorez les huiles d’olive.",
-  },
-  {
-    word: "argan",
-    eyebrow: "UN TRÉSOR À DÉCOUVRIR",
-    title: "L’argan,\ntout simplement.",
-    body: "Deux usages bien distincts : le goût en cuisine, le geste dans le soin. Choisissez votre argan.",
-  },
-  {
-    word: "amlou",
-    eyebrow: "LE PLAISIR DE PARTAGER",
-    title: "Les matins ont\nun goût d’amlou.",
-    body: "Une invitation à prendre son temps et à réunir tout le monde autour de la table.",
-  },
-];
-function OriginalHero() {
-  return <Hero variant="original" />;
-}
-function LunaHero() {
-  return <Hero variant="luna" />;
-}
-function Hero({ variant }: { variant: "original" | "luna" }) {
-  const [slide, setSlide] = useState(0);
-  const [direction, setDirection] = useState(1);
-  const locked = useRef(false);
-  const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const touch = useRef<{ x: number; y: number } | null>(null);
-  const c = heroCopy[slide],
-    p = heroProducts[slide];
-  useEffect(
-    () => () => {
-      if (timer.current) clearTimeout(timer.current);
-    },
-    [],
-  );
-  function move(d: number) {
-    if (locked.current) return;
-    locked.current = true;
-    setDirection(d);
-    setSlide((n) => (n + d + 4) % 4);
-    timer.current = setTimeout(
-      () => {
-        locked.current = false;
-      },
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches ? 80 : 600,
-    );
-  }
-  return (
-    <section
-      className={`hero ${variant} tone-${p.category}`}
-      aria-roledescription="carrousel"
-      aria-label={`Sélection de produits — ${variant === "luna" ? "Luna" : "Original"}`}
-      tabIndex={0}
-      onKeyDown={(e) => {
-        if (e.key === "ArrowRight" || e.key === "ArrowLeft") {
-          e.preventDefault();
-          move(e.key === "ArrowRight" ? 1 : -1);
-        }
-      }}
-      onTouchStart={(e) => {
-        touch.current = { x: e.touches[0].clientX, y: e.touches[0].clientY };
-      }}
-      onTouchEnd={(e) => {
-        if (!touch.current) return;
-        const dx = e.changedTouches[0].clientX - touch.current.x,
-          dy = e.changedTouches[0].clientY - touch.current.y;
-        touch.current = null;
-        if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy) * 1.5)
-          move(dx < 0 ? 1 : -1);
-      }}
-    >
-      <span className="hero-word" aria-hidden="true" key={`word-${slide}`}>
-        {c.word}
-      </span>
-      <div className="hero-copy" key={`copy-${slide}`}>
-        <p className="eyebrow">{c.eyebrow}</p>
-        <h1>
-          {c.title.split("\n").map((t, i) => (
-            <React.Fragment key={t}>
-              {i > 0 && <br />}
-              {t}
-            </React.Fragment>
-          ))}
-        </h1>
-        <p>{c.body}</p>
-        <Link className="button dark" to={`/boutique?category=${p.category}`}>
-          Découvrir {categoryNames[p.category].toLowerCase()}{" "}
-          <span>
-            <Arrow />
-          </span>
-        </Link>
-      </div>
-      <div
-        className="hero-visual"
-        key={`jar-${slide}`}
-        style={{ "--direction": direction } as React.CSSProperties}
-      >
-        <span className="orbit orbit-one" />
-        <span className="orbit orbit-two" />
-        <img
-          src={p.image}
-          alt={`${p.name} — illustration de pot Organik`}
-          className="hero-jar"
-        />
-        <span className="hero-caption">
-          {p.variant}
-          <br />
-          <small>{p.size || p.origin}</small>
-        </span>
-      </div>
-      <div className="hero-bottom">
-        <span className="slide-counter">
-          0{slide + 1}
-          <i />
-          04
-        </span>
-        <div className="slide-dots" aria-hidden="true">
-          {heroProducts.map((item, i) => (
-            <span key={item.id} className={i === slide ? "selected" : ""} />
-          ))}
-        </div>
-        <div className="hero-controls">
-          <button onClick={() => move(-1)} aria-label="Produit précédent">
-            ←
-          </button>
-          <button onClick={() => move(1)} aria-label="Produit suivant">
-            →
-          </button>
-        </div>
-      </div>
-      <p className="sr-only" aria-live="polite">
-        {slide + 1} sur 4 : {p.name}
-      </p>
-    </section>
-  );
-}
-function Storefront({ luna }: { luna: boolean }) {
-  return (
-    <>
-      {luna ? <LunaHero /> : <OriginalHero />}
-      <div className="hero-switch">
-        <span>Une sélection. Deux façons de la découvrir.</span>
-        <Link to={luna ? "/" : "/luna"}>
-          {luna ? "Voir le hero Original" : "Découvrir Luna"} <Arrow />
-        </Link>
-      </div>
-      <section className="section">
-        <div className="section-heading">
-          <div>
-            <p className="eyebrow">QUATRE ESSENTIELS, MILLE ENVIES</p>
-            <h2>Le Maroc à votre table.</h2>
-          </div>
-          <Link className="text-link" to="/boutique">
-            Toute la boutique <Arrow />
-          </Link>
-        </div>
-        <div className="product-grid">
-          {heroProducts.map((p) => (
-            <ProductCard key={p.id} product={p} />
-          ))}
-        </div>
-      </section>
-      <section className="story-block">
-        <img
-          src="/assets/verger.svg"
-          alt="Illustration d’un verger marocain, scène de remplacement"
-        />
-        <div>
-          <p className="eyebrow">L’ESPRIT ORGANIK</p>
-          <h2>
-            Le goût des choses
-            <br />
-            qui ont du sens.
-          </h2>
-          <p>
-            Des produits simples, une curiosité pour leurs origines et l’envie
-            de les partager. Entrez dans l’univers Organik.
-          </p>
-          <Link className="button dark" to="/esprit-organik">
-            Notre démarche <Arrow />
-          </Link>
-        </div>
-      </section>
-      <section className="section">
-        <div className="section-heading">
-          <div>
-            <p className="eyebrow">RECETTES & INSPIRATIONS</p>
-            <h2>Le journal organik.</h2>
-          </div>
-          <Link className="text-link" to="/blog">
-            Tous les articles <Arrow />
-          </Link>
-        </div>
-        <div className="article-grid">
-          {articles.slice(0, 3).map((a) => (
-            <ArticleCard key={a.slug} article={a} />
-          ))}
-        </div>
-      </section>
     </>
   );
 }
 function ProductCard({ product: p }: { product: Product }) {
   const shop = useShop();
   return (
-    <article className="product-card">
+    <article className="product product-card">
       <Link
         to={`/produit/${p.id}`}
-        className={`product-picture tone-${p.category}`}
+        className="product-image"
+        style={{ background: productThemes[p.category].background }}
+        aria-label={`Découvrir ${p.name}, ${p.origin}`}
       >
-        <span className="product-tag">{categoryNames[p.category]}</span>
-        <img
-          loading="lazy"
-          src={p.image}
-          alt={`${p.name}, illustration de remplacement`}
-        />
-        <span className="picture-arrow">
-          <Arrow />
-        </span>
+        <BrandedJar category={p.category} />
       </Link>
-      <div className="product-meta">
-        <span>
-          {p.origin}
-          {p.size && ` · ${p.size}`}
-        </span>
-        <h3>
-          <Link to={`/produit/${p.id}`}>{p.name}</Link>
-        </h3>
-        <p>{p.variant}</p>
-        <div className="product-price">
-          <strong>{money(p.price)}</strong>
-          <button
-            aria-label={`Ajouter ${p.name}, ${p.origin} au panier`}
-            onClick={() => shop.add(p.id)}
-          >
-            +
-          </button>
-        </div>
-        {p.provisional && (
-          <small className="provisional">Prix / référence provisoires</small>
-        )}
+      <div className="variant-card-copy">
+        <span className="eyebrow">{productTitles[p.category]}</span>
+        <h2>
+          <Link to={`/produit/${p.id}`}>{p.variant}</Link>
+        </h2>
+        <p>
+          {p.size}
+          {p.category !== "miel" && ` · ${p.origin}`}
+        </p>
+        <strong>{money(p.price)}</strong>
+        <button
+          className="primary full"
+          aria-label={`Ajouter ${p.name}, ${p.origin} au panier`}
+          onClick={() => shop.add(p.id)}
+        >
+          Ajouter au panier
+        </button>
       </div>
     </article>
   );
@@ -478,7 +252,9 @@ function ProductCard({ product: p }: { product: Product }) {
 function Boutique() {
   const location = useLocation();
   const initialCategory =
-    new URLSearchParams(location.search).get("category") || "";
+    new URLSearchParams(location.search).get("categorie") ||
+    new URLSearchParams(location.search).get("category") ||
+    "";
   const [filters, setFilters] = useState({
     ...defaultFilters,
     category: initialCategory,
@@ -486,28 +262,34 @@ function Boutique() {
   useEffect(() => {
     setFilters({
       ...defaultFilters,
-      category: new URLSearchParams(location.search).get("category") || "",
+      category:
+        new URLSearchParams(location.search).get("categorie") ||
+        new URLSearchParams(location.search).get("category") ||
+        "",
     });
   }, [location.search]);
   const result = filterCatalog(filters);
   const origins = [...new Set(catalog.map((p) => p.origin))];
   return (
-    <div className="page section">
-      <div className="page-heading">
-        <p className="eyebrow">LES ESSENTIELS ORGANIK</p>
-        <h1>La boutique.</h1>
-        <p>Miels, huiles et amlou. À chacun sa découverte.</p>
-        <p className="notice">
+    <div className="shop-page">
+      <div className="page-intro">
+        <p className="eyebrow">LE GARDE-MANGER ORGANIK</p>
+        <h1>La boutique</h1>
+        <p>
+          Miels, huiles et amlou : trouvez votre variété, votre usage et votre
+          origine.
+        </p>
+        <p className="demo-note">
           Catalogue de démonstration : 18 références. Les prix signalés et les
           informations non confirmées devront être validés avant la vente.
         </p>
       </div>
-      <div className="filters">
-        <label className="search-label">
+      <div className="shop-filters">
+        <label className="shop-search">
           Rechercher
           <input
             type="search"
-            placeholder="Un produit, une origine…"
+            placeholder="Thym, argan, Essaouira…"
             value={filters.search}
             onChange={(e) => setFilters({ ...filters, search: e.target.value })}
           />
@@ -567,13 +349,13 @@ function Boutique() {
         {result.length} {result.length === 1 ? "référence" : "références"}
       </p>
       {result.length ? (
-        <div className="product-grid">
+        <div className="catalog variant-catalog">
           {result.map((p) => (
             <ProductCard key={p.id} product={p} />
           ))}
         </div>
       ) : (
-        <div className="empty">
+        <div className="shop-empty">
           <h2>Aucune référence trouvée.</h2>
           <p>Essayez un autre mot ou une autre origine.</p>
           <button
@@ -600,7 +382,7 @@ function ProductPage() {
       </Link>
       <div className="product-detail">
         <div className={`detail-picture tone-${p.category}`}>
-          <img src={p.image} alt={`${p.name} — illustration de remplacement`} />
+          <BrandedJar category={p.category} eager />
         </div>
         <div>
           <p className="eyebrow">
@@ -658,97 +440,119 @@ function ProductPage() {
 }
 function About() {
   return (
-    <div className="page">
-      <section className="section page-heading">
-        <p className="eyebrow">L’ESPRIT ORGANIK</p>
+    <section className="about-page" id="esprit">
+      <div className="page-intro">
+        <span className="eyebrow">L’ESPRIT ORGANIK</span>
         <h1>
-          Simplement bon.
+          Des produits simples.
           <br />
-          Profondément partagé.
+          <em>Des liens qui comptent.</em>
         </h1>
         <p>
-          Une sélection inspirée des saveurs marocaines et des moments que l’on
-          aime passer à table.
+          Du miel sur du pain chaud, un filet d’huile d’olive, une cuillère
+          d’amlou. Organik réunit quatre essentiels pour ces petits rituels du
+          quotidien.
         </p>
-      </section>
-      <img
-        className="about-banner"
-        src="/assets/recolte.svg"
-        alt="Illustration de paysage marocain ; ne représente pas un fournisseur réel"
-      />
-      <section className="section about-sections">
-        <div>
-          <span className="section-number">01</span>
-          <h2>Une équipe à découvrir.</h2>
+      </div>
+      <div className="about-grid">
+        <article>
+          <span className="eyebrow">01 · L’ÉQUIPE</span>
+          <h2>Les personnes derrière organik</h2>
           <p>
-            Organik se reconstruit autour d’une idée simple : rendre ces
-            produits faciles à découvrir et à choisir. La présentation de
-            l’équipe, ses noms et ses portraits seront ajoutés après validation.
+            Choisir les produits, préparer les commandes, répondre à vos
+            questions : notre projet se construit autour de ces attentions
+            concrètes.
           </p>
-        </div>
-        <div>
-          <span className="section-number">02</span>
-          <h2>Des origines, des rencontres.</h2>
+          <p className="content-pending">
+            À compléter : noms, rôles, histoire de l’équipe et portrait
+            collectif.
+          </p>
+        </article>
+        <article>
+          <span className="eyebrow">02 · LES FOURNISSEURS</span>
+          <h2>Une origine à connaître</h2>
           <p>
-            Agadir, Essaouira, Beni Mellal : ces origines figurent dans le
-            catalogue de travail. Les profils des producteurs, les partenariats
-            et leurs photos authentiques restent à documenter. Aucune relation
-            commerciale n’est affirmée ici.
+            Le catalogue distingue Agadir et Essaouira pour l’argan et l’amlou,
+            ainsi qu’Agadir et Béni Mellal pour les huiles d’olive. Chaque
+            référence affiche l’origine renseignée.
           </p>
-        </div>
-        <div>
-          <span className="section-number">03</span>
-          <h2>Choisir avec attention.</h2>
-          <p>
-            Miels, huiles d’olive, argan alimentaire et cosmétique, amlou. Notre
-            sélection sera accompagnée de compositions, formats et informations
-            vérifiés avant toute commercialisation.
+          <p className="content-pending">
+            À compléter : producteurs et coopératives partenaires, lieux de
+            production et informations de traçabilité.
           </p>
-        </div>
-      </section>
-      <section className="section">
-        <p className="eyebrow">CARNET D’INSPIRATIONS</p>
-        <h2>Une terre, mille nuances.</h2>
-        <p className="notice">
-          Galerie illustrative : ces scènes dessinées ne sont pas des photos de
-          notre équipe ou de partenaires.
+        </article>
+      </div>
+      <section className="selection-section">
+        <span className="eyebrow">03 · NOTRE GRILLE DE SÉLECTION</span>
+        <h2>Comprendre ce qui entre dans le pot</h2>
+        <p>
+          Avant de référencer un produit, nous souhaitons documenter trois
+          éléments. Les informations confirmées seront ensuite ajoutées aux
+          fiches.
         </p>
-        <div className="gallery">
-          {["verger", "atelier", "recolte", "rituel"].map((s, i) => (
-            <figure key={s}>
+        <div className="selection-grid">
+          {[
+            [
+              "L’origine",
+              "Identifier le producteur, la région et la provenance de chaque lot.",
+            ],
+            [
+              "La composition",
+              "Préciser les ingrédients, les allergènes et l’usage alimentaire ou cosmétique.",
+            ],
+            [
+              "Le goût et la conservation",
+              "Décrire le profil du produit, son conditionnement et les conseils pour le conserver.",
+            ],
+          ].map(([h, p]) => (
+            <article key={h}>
+              <h3>{h}</h3>
+              <p>{p}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+      <section className="gallery-section">
+        <span className="eyebrow">04 · LA GALERIE</span>
+        <h2>Au fil des ingrédients</h2>
+        <p>
+          Images d’ambiance illustratives de remplacement. Les photographies de
+          l’équipe et des partenaires seront ajoutées lorsqu’elles seront
+          disponibles.
+        </p>
+        <div className="about-gallery">
+          {[
+            ["recolte", "Autour du miel"],
+            ["verger", "Le monde de l’olive"],
+            ["atelier", "Argan, amandes et amlou"],
+          ].map(([src, caption]) => (
+            <figure key={src}>
               <img
+                src={`/assets/${src}.svg`}
+                alt={`Illustration de remplacement : ${caption}`}
                 loading="lazy"
-                src={`/assets/${s}.svg`}
-                alt={`Scène illustrative ${["de verger", "de table", "des terres marocaines", "du quotidien"][i]}`}
               />
-              <figcaption>
-                {
-                  [
-                    "Au verger",
-                    "Autour de la table",
-                    "Terres du Maroc",
-                    "Les gestes simples",
-                  ][i]
-                }{" "}
-                · Illustration
-              </figcaption>
+              <figcaption>{caption}</figcaption>
             </figure>
           ))}
         </div>
       </section>
-    </div>
+      <Link className="primary" to="/boutique">
+        Découvrir la boutique
+      </Link>
+    </section>
   );
 }
 function ArticleCard({ article: a }: { article: (typeof articles)[number] }) {
   return (
-    <article className="article-card">
+    <article className="article-card journal-card">
       <Link to={`/blog/${a.slug}`}>
         <img
           loading="lazy"
           src={`/assets/${a.image}.svg`}
           alt="Illustration de remplacement"
         />
-        <div className="article-meta">
+        <div className="journal-card-copy article-meta">
           <span>
             {a.kicker} · {a.minutes} min
           </span>
@@ -764,8 +568,8 @@ function ArticleCard({ article: a }: { article: (typeof articles)[number] }) {
 }
 function Journal() {
   return (
-    <div className="page section">
-      <div className="page-heading">
+    <div className="journal-page">
+      <div className="page-intro">
         <p className="eyebrow">RECETTES, GESTES & INSPIRATIONS</p>
         <h1>Le journal organik.</h1>
         <p>À cuisiner, à partager, à découvrir. Prenons le temps.</p>
@@ -774,7 +578,7 @@ function Journal() {
           propositions, les données produit restent à confirmer.
         </p>
       </div>
-      <div className="article-grid">
+      <div className="journal-grid">
         {articles.map((a) => (
           <ArticleCard key={a.slug} article={a} />
         ))}
@@ -1063,42 +867,12 @@ function Cart({ close }: { close: () => void }) {
 function Footer() {
   return (
     <footer>
-      <div className="footer-main">
-        <div>
-          <Link to="/">
-            <img className="logo" src="/assets/logo.svg" alt="Organik" />
-          </Link>
-          <p>
-            Les saveurs du Maroc.
-            <br />
-            Le plaisir des choses simples.
-          </p>
-        </div>
-        <div>
-          <h3>Découvrir</h3>
-          <Link to="/boutique">La boutique</Link>
-          <Link to="/esprit-organik">L’esprit organik</Link>
-          <Link to="/blog">Le journal organik</Link>
-          <Link to="/luna">Luna</Link>
-        </div>
-        <div>
-          <h3>En toute transparence</h3>
-          <p>
-            Site de démonstration.
-            <br />
-            Catalogue et prix à confirmer.
-            <br />
-            Aucune commande réelle.
-          </p>
-          <span className="footer-note">
-            Identité et illustrations reconstituées.
-          </span>
-        </div>
-      </div>
-      <div className="footer-bottom">
-        <span>© {new Date().getFullYear()} Organik</span>
-        <span>Made by SET & GHO</span>
-      </div>
+      <Link to="/" className="footer-brand">
+        <img src="/assets/original/logo.png" alt="organik.ma" />
+      </Link>
+      <p>Miel. Olive. Argan. Amlou.</p>
+      <span>© {new Date().getFullYear()} organik.ma</span>
+      <span className="made-by">Made by SET &amp; GHO</span>
     </footer>
   );
 }

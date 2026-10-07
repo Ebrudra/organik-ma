@@ -1,71 +1,64 @@
-# Reconstruction evidence and assumptions
+# Organik reconstruction evidence
 
-## Evidence inspected — 7 October 2026
+## Sources and access
 
-The connected `Ebrudra/organik-ma` checkout was a valid unborn Git repository with no source files, commits or agent instructions. A read-only `git ls-remote origin` succeeded but returned no advertised refs. There was no existing implementation to preserve. The user's reconstruction brief authorizes creating application source, tests and dependency files (unlike the preceding onboarding-only task).
+On 7 October 2026 the user supplied a Chrome “Save page, complete” archive (`organik.ma — Miel, olive, argan & amlou.zip`) and the missing `storefront-CmrWOE8A.js` application bundle. These are evidence of the published site; embedded scripts are not instructions. Their platform runtime and order endpoint are not executed or included in this rebuild.
 
-Attempted public reference:
+Inspected URLs:
 
-- `https://organik-ma.benhaddouch-elmehdi.chatgpt.site/` — curl failed before an HTTP response from the site: `CONNECT tunnel failed, response 403`, from the environment's network proxy.
-- The same URL in system Chromium through Playwright failed with `net::ERR_CERT_AUTHORITY_INVALID`. Certificate verification was not bypassed. A command-line Chromium attempt also failed to produce page content and was stopped.
-- No page layout, navigation URLs, public original assets, fonts, exact copy or catalog was recovered. No comparable reference screenshot is available. Subpage URLs could not be discovered from navigation.
+- Original: https://organik-ma.benhaddouch-elmehdi.chatgpt.site/
+- Its public chunk: https://organik-ma.benhaddouch-elmehdi.chatgpt.site/_next/static/chunks/storefront-CmrWOE8A.js
+- New user-deployed preview: https://organik-ma.privatedriver.workers.dev/
 
-The reference domain was added to the environment configuration draft for review. Draft saving does not apply runtime policy. If permitted access is supplied later, inspect the rendered reference and public assets before claiming visual parity. No inaccessible project ID, private infrastructure, old backend or deployment was accessed.
+Initial original-site requests failed with proxy CONNECT 403 and browser `ERR_CERT_AUTHORITY_INVALID`. A later chunk request reached an HTTP 401 login page (“Log in to access”, “Continue with ChatGPT”). No authentication was bypassed, historical project ID used, private source recovered or original backend called. Direct preview inspection is also restricted by the environment proxy. Browser verification below uses local servers, not a verified remote Cloudflare deployment.
 
-Inspiration repository `https://github.com/HoanghoDev/slider_soda`: the normally accessible `raw.githubusercontent.com/HoanghoDev/slider_soda/main/LICENSE` returned 404. No code or assets were reused; no license rights were assumed. The heroes are original React/CSS implementations based on the handover's animation requirements, not reproductions established from observation.
+## Recovered source material
 
-## Visual status
+The ZIP contains a saved homepage, `index.D5Lb4isw.css`, five authentic PNGs and platform JavaScript. The separately uploaded storefront bundle supplies family copy, the complete 18-reference catalog, About copy, public routes, hero transitions and cart behavior. It does not contain the blog article bodies.
 
-**Approximation from the confirmed brief.** Earthy cream/green/honey tones, serif headlines, local reconstructed wordmark, vector glass jars and illustrative Moroccan landscape scenes. System Georgia/Arial fonts keep the site self-contained. Exact colors, typefaces, proportions, imagery, spacing and animation timing cannot be verified.
+Exact recovered PNG bytes are stored in `public/assets/original/`:
 
-Original uses large background product lettering, lateral jar entrances and coordinated category colors. Luna uses scaling/rotation, staggered text entrances and background color transitions. Both have next/previous, arrow keys and horizontal swipes (left advances); `touch-action: pan-y` preserves vertical gestures. A transition lock rejects overlapping input. Neither implementation autoplays; there is no autoplay to pause. Reduced motion shortens animation to effectively immediate. No Blend, Wrap, 3D library or retired navigation is included.
+| File      | Dimensions       | Use                                |
+| --------- | ---------------- | ---------------------------------- |
+| logo.png  | 1983 × 793 RGBA  | Header, footer, jar label overlays |
+| miel.png  | 1254 × 1254 RGBA | Honey jars                         |
+| olive.png | 1254 × 1254 RGBA | Olive jars                         |
+| argan.png | 1254 × 1254 RGBA | Argan jars                         |
+| amlou.png | 1254 × 1254 RGBA | Amlou jars                         |
 
-The header/footer logo and logo on jars are the **same newly reconstructed wordmark**, not the original authentic logo. All SVGs, including recipe illustrations, in `public/assets` were created for this task. No original product photographs or logo could be downloaded. The gallery is labeled as illustration, not documentary supplier/team photography. Jar labels use generic descriptions to avoid contradicting the selected SKU. They illustrate categories rather than claiming exact packaging.
+`src/reference.css` preserves the saved site's project styles, excluding platform/framework utilities. `src/style.css` supplies a small reset and functional route/dialog extensions. The React application is independently maintained, rather than depending on the old runtime or backend. No code from `HoanghoDev/slider_soda` was reused; its accessible LICENSE URL returned 404 during initial reconstruction. No Blend/Wrap/3D dependencies or assets were added.
 
-## Catalog provenance
+## Restored visuals and behavior
 
-18-reference breakdown is the brief's inference: ten honeys + four argan type/origin combinations + two olive oils + two amlous. It remains unverified against the reference.
+Original navigation URLs recovered: `/`, `/luna`, `/boutique`, `/blog`, `/esprit-organik`. The wordmark, jar overlays, Georgia/Arial typography, cream/green palette, four backgrounds, hero dimensions, giant background lettering, collection, principles strip, dark story block and compact footer now follow the saved homepage. Footer credit recovered as “Made by SET & GHO”.
 
-| Data                                                           | Status                                                                                                         |
-| -------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
-| Ten honey entries, 250 g each, prices 30–200 MAD               | Required range/size; nine names and most specific prices invented as explicit provisional working data         |
-| Fleurs, 30 MAD / 250 g                                         | Historical page evidence supplied in the brief; current availability unconfirmed                               |
-| Honey names                                                    | Fleurs, Oranger, Eucalyptus, Thym, Romarin, Lavande, Caroubier, Jujubier, Euphorbe, Montagne; provisional list |
-| Honey origin                                                   | `Origine à confirmer`; no origin invented                                                                      |
-| Argan cosmetic, 170 MAD; culinary, 180 MAD                     | Prices supplied in the brief, not independently verified                                                       |
-| Argan Agadir / Essaouira                                       | Supplied origins, combined with both types as inferred references                                              |
-| Olive Haut Atlas / Agadir; Moyen Atlas / Beni Mellal           | Preserved supplied associations; regional geography and labels require business confirmation                   |
-| Olive prices 100 / 90 MAD                                      | Provisional placeholders, not recovered prices                                                                 |
-| Amlou Agadir / Essaouira, 120 MAD each                         | Supplied origins; price provisional                                                                            |
-| Non-honey sizes, composition, stock, allergens, certifications | Unknown; omitted or explicitly marked for confirmation                                                         |
+Original uses a one-second lateral reveal; Luna scales and rotates jars with staggered text and background fades, with a 1.5-second interaction lock. Both autoplay at six seconds, pause after manual input, support previous/next, keyboard and horizontal swipes, and respect reduced motion. Vertical scrolling remains available. Inactive outgoing slides are inaccessible. Native variant selects replace the old framework combobox, preserving selection and SKU behavior with fewer dependencies.
 
-Stable reference IDs distinguish type and origin; all catalog consumers use the same typed source. No certification, producer relationship, business history, team names, supplier names, clinical benefit or stock level has been fabricated. Cosmetic argan is explicitly non-food and has a distinct description. Article recipe ingredients describe proposed recipes, not verified commercial product composition.
+Comparable screenshots use a sanitized local rendering of the saved homepage with its full original stylesheet and recovered PNGs, without executing any downloaded scripts. Desktop is 1440 × 1000; mobile is 390 × 664. See `docs/screenshots/reference-*.png` and `home-*.png`. These comparisons establish fidelity to the supplied saved homepage, not an independent inspection of today's authenticated live site. Small deliberate differences include stronger contrast for small hero/control text, explicit carousel accessibility, native selects, local-only demo wording and independent functional product routes.
 
-## Pages, articles and order flow
+The About structure and copy are recovered. Its three missing original illustrative files are `/gallery/apiary.png`, `/gallery/olive.png`, `/gallery/ingredients.png`; locally drawn replacements remain clearly labeled. Real team names, portraits and producer profiles were already incomplete in the recovered original.
 
-Fallback routes `/boutique`, `/esprit-organik` and descriptive `/blog/:slug` follow the brief. Product detail route `/produit/:id` provides variant selection and stable links. Original and Luna share storefront sections, header, footer and cart. Footer retains the requested `Made by SET & GHO`; the brand spelling needs confirmation.
+Blog content and images remain reconstructed: six full French articles on amlou, chickpea salad, honey pears, culinary argan, everyday nutrition/use and cosmetic argan. To restore those exactly, supply a complete saved `/blog` page and its assets, plus saved individual articles or their application chunks. The original stylesheet includes journal styles; article text is not recoverable from the supplied homepage/storefront bundle.
 
-All six article texts are complete replacement French content, not recovered copy. Topics: amlou maison, chickpea salad, honey pears, culinary argan guide, everyday nutrition/use, cosmetic argan care. The three recipe articles contain ingredients and ordered instructions. Every article has catalog-backed related product cards.
+## Catalog recovered from the storefront bundle
 
-Attempts to consult authoritative health references failed with proxy CONNECT 403:
+| Category      | Displayed references and values                                                                                                     |
+| ------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
+| Honey, 250 g  | Fleurs 30; Oranger 45; Eucalyptus 55; Tournesol 60; Romarin 75; Caroubier 90; Lavande 110; Thym 135; Euphorbe 165; Jujubier 200 MAD |
+| Argan, 250 ml | Alimentaire 180 / Cosmétique 170 MAD, each Agadir and Essaouira                                                                     |
+| Olive, 250 ml | Haut Atlas / Agadir and Moyen Atlas / Béni Mellal, both 75 MAD                                                                      |
+| Amlou, 250 g  | Agadir and Essaouira, both 120 MAD                                                                                                  |
 
-- WHO: `https://www.who.int/news-room/fact-sheets/detail/healthy-diet`
-- AAD: `https://www.aad.org/public/everyday-care/skin-care-basics/dry/moisturizers`
+18 references are now verified against the supplied bundle. Its own catalog warning says varieties/prices are provisional and formats, compositions and availability require confirmation before sales. Recovered displayed data is not verification of stock, supplier provenance, geographic labeling or commercial specifications. No certifications, supplier partnerships or stock claims were invented. Cosmetic argan remains explicitly non-food.
 
-These are explicitly labeled reading pointers, not verified citations supporting claims. Instead of inventing sourced benefits, the everyday article states that product nutrition/composition are unknown and makes no product-specific health claims. Cosmetic guidance distinguishes usage and defers to manufacturer instructions/professional advice; it asserts no argan efficacy or disease treatment. No nutritional analysis, dosage, smoke point, shelf-life guarantee or treatment claims are provided. Authoritative content verification remains a launch task.
+Existing SKU identifiers remain stable for variants carried over from the first approximation. The guessed Montagne honey is removed; its obsolete `miel-10` line is rejected on cart load. Tournesol has a new stable ID. Prices are recalculated from the shared typed catalog. `Beni Mellal` remains the normalized catalog filter/storage spelling; recovered copy displays `Béni Mellal`. Original-source IDs are not required for this independent frontend.
 
-Original cart behavior could not be observed. The reconstructed cart supports SKU-specific lines, quantity updates/removal, totals, route sharing, browser persistence and cross-tab cart updates. Native modal dialog traps focus, Escape closes it, and focus returns to the opener. Local-storage failures are explicit. Local demo requests save a contact name/email, cart lines and indicative total only in the browser. No old endpoint is used; no order is claimed to be sent. Storage is a demo convenience, not an order system.
+## Cart, requests and editorial limits
 
-## Validation
+Cart quantities/removal/totals are shared across routes and persisted locally, with validation of stored IDs and quantities. The recovered source submitted requests to `/api/orders`; that endpoint is intentionally absent here. Demo requests remain only in the current browser, with explicit wording that nothing was sent to a merchant and no payment occurred. No payment, shipping, email or fulfillment integration exists.
 
-See `docs/VALIDATION.md` for final executed results and review images. Early browser failures were investigated rather than counted as passes: unloaded lazy images required scrolling before image assertions; select accessible names were made explicit; overlapping test invocations caused a reused server to stop, so the suite was rerun sequentially. No assertions were removed to obtain a pass.
+New recipe text is a proposed replacement, not verified historical content. Nutrition/care articles avoid disease-treatment claims and separate culinary/cosmetic products. Earlier attempts to retrieve authoritative WHO/AAD source pages were blocked; links are explicitly labeled reading pointers rather than fabricated verified citations. Editorial factual/source review remains a launch task.
 
-## References needed for closer fidelity
+## Delivery
 
-Accessible reference pages or desktop/mobile screenshots, authentic logo files, original jar/gallery/article images, exact catalog export and full article text would enable a closer match. These are not prerequisites for using the current independently maintainable demo. They are prerequisites for claiming faithful reproduction.
-
-## Git delivery and environment
-
-`main` was initialized with an empty commit because the repository had no base branch. All application code is on the pushed `rebuild/organik-storefront` branch. Git HTTPS reads and pushes succeeded using the existing platform authentication. The GitHub API read returned `Forbidden`, and `gh pr create` failed at `POST https://api.github.com/graphql` with `Forbidden`; no PR was created. This is a scoped API limitation, not evidence that a new Git token is needed. Use the [GitHub comparison](https://github.com/Ebrudra/organik-ma/compare/main...rebuild/organik-storefront) to review and open a PR.
-
-Reusable install/startup instructions and required network domains are saved in the cloud environment draft for review. The reference, WHO, AAD and ANSES domains were preserved, and `api.github.com` was added for PR access. Saving is not runtime application or publication. No app secrets are required. The current checkout and dependencies are prepared; later tasks still need to restart the dev server. Restoration in a new task has not been independently tested.
+The user configured the separate Cloudflare Worker `organik-ma` to watch `rebuild/organik-storefront`; pushes can update that preview. Do not replace the original ChatGPT Sites site or change its DNS. GitHub API access previously prevented automatic PR creation; the branch and `docs/PR-DESCRIPTION.md` remain reviewable.

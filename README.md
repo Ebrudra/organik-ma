@@ -1,6 +1,6 @@
 # Organik.ma
 
-French-language Moroccan storefront reconstruction. React, TypeScript, Vite and React Router; local SVG artwork; no CMS or backend. Prices are in MAD. **This is a demo and an approximation, not a verified copy of the published site.** See [rebuild notes](docs/REBUILD-NOTES.md) for evidence and [launch handover](docs/LAUNCH-HANDOVER.md) before launch.
+French-language Moroccan storefront reconstruction. React, TypeScript, Vite and React Router; recovered local PNG product imagery and logo; no CMS or backend. Prices are in MAD. **Demo storefront restored from the user’s saved homepage, stylesheet and storefront bundle. Blog artwork/content and gallery imagery still include documented replacements.** See [rebuild notes](docs/REBUILD-NOTES.md) for evidence and [launch handover](docs/LAUNCH-HANDOVER.md) before launch.
 
 ## Install and run
 
@@ -22,7 +22,7 @@ npm run preview
 
 With a development server running, `npm run smoke` performs a short functional browser readiness check. Set `ORGANIK_BASE_URL` to a running preview server to check the production bundle.
 
-The production bundle is in `dist/`. Static hosting must serve `index.html` for unknown paths so direct article/product routes work. No production deployment is part of this rebuild.
+The production bundle is in `dist/`. Static hosting must serve `index.html` for unknown paths so direct article/product routes work. The user has deployed a separate Cloudflare Workers preview; the original published site is untouched.
 
 ## Browser verification
 
@@ -35,13 +35,13 @@ The tests use `/usr/bin/chromium` when present, otherwise Playwright's installed
 
 ## Routes and editing
 
-- `/` — Original-inspired storefront; `/luna` — alternative hero.
+- `/` — Recovered Original storefront; `/luna` — alternative hero.
 - `/boutique` — searchable/filterable 18-reference catalog.
 - `/produit/:id` — variant-aware product detail.
 - `/esprit-organik` — about and illustrative gallery.
 - `/blog` and `/blog/:slug` — six full French articles.
 
-Edit products in `src/catalog.ts`, articles in `src/articles.ts`, layouts in `src/main.tsx`, and styles in `src/style.css`. The catalog supplies hero references, cards, details, filters, cart prices and related article products. SKU IDs must stay stable, or existing carts need a migration. Replacement art is in `public/assets/`; regenerate it with `python3 scripts/generate-assets.py`. The same reconstructed wordmark appears in header, footer and jar labels. It is **not** the recovered original logo.
+Edit products in `src/catalog.ts`, articles in `src/articles.ts`, shared routes in `src/main.tsx`, storefront/heroes in `src/Storefront.tsx`, and styles in `src/reference.css` / `src/style.css`. The catalog supplies hero references, cards, details, filters, cart prices and related article products. SKU IDs must stay stable, or existing carts need a migration. Authentic recovered logo and four jar PNGs are in `public/assets/original/`. Remaining replacement SVG gallery/blog art is in `public/assets/`; `scripts/generate-assets.py` regenerates only those SVGs, never the recovered PNGs. Header, footer and jar overlays use the authentic recovered logo.
 
 ## Cart and demo requests
 
@@ -55,4 +55,4 @@ npx prettier --write src tests *.ts *.json index.html docs README.md
 
 ## Cloudflare Workers preview
 
-The separate preview Worker is configured in `wrangler.jsonc`. Run `npm run cf:check` for a build and deployment dry run, `npm run cf:dev` for the local Workers runtime, or `npm run cf:deploy` after authorizing your Cloudflare account. The asset configuration supports SPA routes. For GitHub-connected deployment and official MCP connection instructions, follow [Cloudflare preview guide](docs/CLOUDFLARE-PREVIEW.md). Select **rebuild/organik-storefront**, not the empty main branch, until the rebuild is merged. No public Cloudflare deployment has been performed yet.
+The separate preview Worker is configured in `wrangler.jsonc`. Run `npm run cf:check` for a build and deployment dry run, `npm run cf:dev` for the local Workers runtime, or `npm run cf:deploy` after authorizing your Cloudflare account. The asset configuration supports SPA routes. For GitHub-connected deployment and official MCP connection instructions, follow [Cloudflare preview guide](docs/CLOUDFLARE-PREVIEW.md). Select **rebuild/organik-storefront**, not the empty main branch, until the rebuild is merged. The user’s preview is https://organik-ma.privatedriver.workers.dev/; GitHub pushes to the selected branch trigger its build.

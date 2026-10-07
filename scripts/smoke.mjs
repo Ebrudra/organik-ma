@@ -26,7 +26,7 @@ try {
   await page.getByLabel("Origine", { exact: true }).selectOption("Agadir");
   assert.equal(await page.locator(".product-card").count(), 1);
   await page.locator(".product-card button").click();
-  await page.getByRole("button", { name: /Ouvrir le panier/ }).click();
+
   assert.match(await page.locator(".cart-total").innerText(), /170 MAD/);
   await page.keyboard.press("Escape");
   await page.goto(`${baseURL}/blog`);
