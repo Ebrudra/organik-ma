@@ -20,7 +20,7 @@ Inspiration repository `https://github.com/HoanghoDev/slider_soda`: the normally
 
 Original uses large background product lettering, lateral jar entrances and coordinated category colors. Luna uses scaling/rotation, staggered text entrances and background color transitions. Both have next/previous, arrow keys and horizontal swipes (left advances); `touch-action: pan-y` preserves vertical gestures. A transition lock rejects overlapping input. Neither implementation autoplays; there is no autoplay to pause. Reduced motion shortens animation to effectively immediate. No Blend, Wrap, 3D library or retired navigation is included.
 
-The header/footer logo and logo on jars are the **same newly reconstructed wordmark**, not the original authentic logo. All SVGs in `public/assets` were created for this task. No original product photographs or logo could be downloaded. The gallery is labeled as illustration, not documentary supplier/team photography. Jar labels use generic descriptions to avoid contradicting the selected SKU. They illustrate categories rather than claiming exact packaging.
+The header/footer logo and logo on jars are the **same newly reconstructed wordmark**, not the original authentic logo. All SVGs, including recipe illustrations, in `public/assets` were created for this task. No original product photographs or logo could be downloaded. The gallery is labeled as illustration, not documentary supplier/team photography. Jar labels use generic descriptions to avoid contradicting the selected SKU. They illustrate categories rather than claiming exact packaging.
 
 ## Catalog provenance
 
@@ -63,3 +63,9 @@ See `docs/VALIDATION.md` for final executed results and review images. Early bro
 ## References needed for closer fidelity
 
 Accessible reference pages or desktop/mobile screenshots, authentic logo files, original jar/gallery/article images, exact catalog export and full article text would enable a closer match. These are not prerequisites for using the current independently maintainable demo. They are prerequisites for claiming faithful reproduction.
+
+## Git delivery and environment
+
+`main` was initialized with an empty commit because the repository had no base branch. All application code is on the pushed `rebuild/organik-storefront` branch. Git HTTPS reads and pushes succeeded using the existing platform authentication. The GitHub API read returned `Forbidden`, and `gh pr create` failed at `POST https://api.github.com/graphql` with `Forbidden`; no PR was created. This is a scoped API limitation, not evidence that a new Git token is needed. Use the [GitHub comparison](https://github.com/Ebrudra/organik-ma/compare/main...rebuild/organik-storefront) to review and open a PR.
+
+Reusable install/startup instructions and required network domains are saved in the cloud environment draft for review. The reference, WHO, AAD and ANSES domains were preserved, and `api.github.com` was added for PR access. Saving is not runtime application or publication. No app secrets are required. The current checkout and dependencies are prepared; later tasks still need to restart the dev server. Restoration in a new task has not been independently tested.

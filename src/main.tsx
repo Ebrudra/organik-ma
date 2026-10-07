@@ -133,6 +133,24 @@ function ScrollManager() {
   }, [pathname]);
   return null;
 }
+function Arrow() {
+  return (
+    <svg
+      className="arrow-icon"
+      width="14"
+      height="14"
+      viewBox="0 0 16 16"
+      aria-hidden="true"
+    >
+      <path
+        d="M3 13 13 3M3 3h10v10"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.2"
+      />
+    </svg>
+  );
+}
 function Header() {
   const shop = useShop();
   const [menu, setMenu] = useState(false);
@@ -298,7 +316,10 @@ function Hero({ variant }: { variant: "original" | "luna" }) {
         </h1>
         <p>{c.body}</p>
         <Link className="button dark" to={`/boutique?category=${p.category}`}>
-          Découvrir {categoryNames[p.category].toLowerCase()} <span>↗</span>
+          Découvrir {categoryNames[p.category].toLowerCase()}{" "}
+          <span>
+            <Arrow />
+          </span>
         </Link>
       </div>
       <div
@@ -352,7 +373,7 @@ function Storefront({ luna }: { luna: boolean }) {
       <div className="hero-switch">
         <span>Une sélection. Deux façons de la découvrir.</span>
         <Link to={luna ? "/" : "/luna"}>
-          {luna ? "Voir le hero Original" : "Découvrir Luna"} ↗
+          {luna ? "Voir le hero Original" : "Découvrir Luna"} <Arrow />
         </Link>
       </div>
       <section className="section">
@@ -362,7 +383,7 @@ function Storefront({ luna }: { luna: boolean }) {
             <h2>Le Maroc à votre table.</h2>
           </div>
           <Link className="text-link" to="/boutique">
-            Toute la boutique ↗
+            Toute la boutique <Arrow />
           </Link>
         </div>
         <div className="product-grid">
@@ -388,7 +409,7 @@ function Storefront({ luna }: { luna: boolean }) {
             de les partager. Entrez dans l’univers Organik.
           </p>
           <Link className="button dark" to="/esprit-organik">
-            Notre démarche ↗
+            Notre démarche <Arrow />
           </Link>
         </div>
       </section>
@@ -399,7 +420,7 @@ function Storefront({ luna }: { luna: boolean }) {
             <h2>Le journal organik.</h2>
           </div>
           <Link className="text-link" to="/blog">
-            Tous les articles ↗
+            Tous les articles <Arrow />
           </Link>
         </div>
         <div className="article-grid">
@@ -425,7 +446,9 @@ function ProductCard({ product: p }: { product: Product }) {
           src={p.image}
           alt={`${p.name}, illustration de remplacement`}
         />
-        <span className="picture-arrow">↗</span>
+        <span className="picture-arrow">
+          <Arrow />
+        </span>
       </Link>
       <div className="product-meta">
         <span>
@@ -731,7 +754,9 @@ function ArticleCard({ article: a }: { article: (typeof articles)[number] }) {
           </span>
           <h3>{a.title}</h3>
           <p>{a.intro}</p>
-          <span className="text-link">Lire l’article ↗</span>
+          <span className="text-link">
+            Lire l’article <Arrow />
+          </span>
         </div>
       </Link>
     </article>
@@ -813,7 +838,7 @@ function ArticlePage() {
               {a.sources.map((s) => (
                 <li key={s.url}>
                   <a href={s.url} rel="noreferrer" target="_blank">
-                    {s.label} ↗
+                    {s.label} <Arrow />
                   </a>
                 </li>
               ))}
@@ -825,7 +850,7 @@ function ArticlePage() {
         <div className="section-heading">
           <h2>À découvrir en boutique.</h2>
           <Link className="text-link" to="/boutique">
-            Voir la sélection ↗
+            Voir la sélection <Arrow />
           </Link>
         </div>
         <div className="product-grid">
@@ -926,7 +951,7 @@ function Cart({ close }: { close: () => void }) {
           <div className="empty">
             <h3>Votre panier attend ses premières découvertes.</h3>
             <Link className="button dark" onClick={close} to="/boutique">
-              Explorer la boutique ↗
+              Explorer la boutique <Arrow />
             </Link>
           </div>
         ) : (
@@ -953,7 +978,10 @@ function Cart({ close }: { close: () => void }) {
                         >
                           −
                         </button>
-                        <span aria-label="Quantité">{l.quantity}</span>
+                        <span>
+                          <span className="sr-only">Quantité : </span>
+                          {l.quantity}
+                        </span>
                         <button
                           disabled={l.quantity >= 99}
                           aria-label={`Augmenter ${p.name}, ${p.origin}`}

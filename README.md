@@ -20,6 +20,8 @@ npm run build
 npm run preview
 ```
 
+With a development server running, `npm run smoke` performs a short functional browser readiness check. Set `ORGANIK_BASE_URL` to a running preview server to check the production bundle.
+
 The production bundle is in `dist/`. Static hosting must serve `index.html` for unknown paths so direct article/product routes work. No production deployment is part of this rebuild.
 
 ## Browser verification
@@ -29,7 +31,7 @@ npx playwright install chromium
 npm run test:browser
 ```
 
-The tests use `/usr/bin/chromium` when present, otherwise Playwright's installed Chromium. Set `CHROMIUM_PATH` to choose another executable. The test runner starts its own Vite server on port 4173. Desktop (1440 × 1000) and mobile (390 × 664) projects verify routes, images, overflow, heroes, reduced motion, gesture handlers, filtering, variant identity, cart persistence, demo requests, keyboard focus and selected axe accessibility checks. Gesture checks dispatch browser TouchEvents; they do not replace testing on a physical phone. Screenshots and failure traces go in ignored `test-results/`.
+The tests use `/usr/bin/chromium` when present, otherwise Playwright's installed Chromium. Set `CHROMIUM_PATH` to choose another executable. The test runner starts its own Vite server on port 4173. Desktop (1440 × 1000) and mobile (390 × 664) projects verify routes, images, overflow, heroes, reduced motion, gesture handlers, filtering, variant identity, cart persistence, demo requests, keyboard focus and selected axe accessibility checks. Gesture checks cover browser TouchEvents and native Chromium-emulated touch input, including vertical scrolling on both heroes. They do not replace testing on a physical phone. Screenshots and failure traces go in ignored `test-results/`.
 
 ## Routes and editing
 

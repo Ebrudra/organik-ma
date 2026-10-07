@@ -127,7 +127,7 @@ test("navigation, keyboard and both hero controls guard rapid input", async ({
 });
 test("horizontal gestures advance and reverse while vertical gestures preserve slide", async ({
   page,
-}) => {
+}, info) => {
   await page.goto("/luna");
   const hero = page.locator(".hero");
   async function swipe(dx: number, dy: number) {
@@ -174,6 +174,43 @@ test("horizontal gestures advance and reverse while vertical gestures preserve s
   expect(await hero.evaluate((e) => getComputedStyle(e).touchAction)).toBe(
     "pan-y",
   );
+  if (info.project.name === "mobile") {
+    const cdp = await page.context().newCDPSession(page);
+    async function nativeSwipe(x: number, y: number, dx: number, dy: number) {
+      await cdp.send("Input.dispatchTouchEvent", {
+        type: "touchStart",
+        touchPoints: [{ x, y, id: 1 }],
+      });
+      for (let step = 1; step <= 8; step++) {
+        await cdp.send("Input.dispatchTouchEvent", {
+          type: "touchMove",
+          touchPoints: [
+            { x: x + (dx * step) / 8, y: y + (dy * step) / 8, id: 1 },
+          ],
+        });
+        await page.waitForTimeout(25);
+      }
+      await cdp.send("Input.dispatchTouchEvent", {
+        type: "touchEnd",
+        touchPoints: [],
+      });
+    }
+    for (const route of ["/", "/luna"]) {
+      await page.goto(route);
+      await page.waitForTimeout(800);
+      await nativeSwipe(280, 540, -150, 0);
+      await expect(hero.locator(".slide-counter")).toContainText("02");
+      await page.waitForTimeout(800);
+      await nativeSwipe(80, 540, 150, 0);
+      await expect(hero.locator(".slide-counter")).toContainText("01");
+      await page.waitForTimeout(800);
+      await nativeSwipe(190, 560, 0, -250);
+      await expect
+        .poll(() => page.evaluate(() => window.scrollY))
+        .toBeGreaterThan(10);
+      await expect(hero.locator(".slide-counter")).toContainText("01");
+    }
+  }
 });
 test("accent-insensitive search, combined filters, prices, empty and reset", async ({
   page,
@@ -299,10 +336,19 @@ test("accessible page and dialog names, contrast and structure", async ({
       .analyze();
     expect(result.violations).toEqual([]);
   }
+  await page.goto("/produit/argan-culinaire-agadir");
+  await page
+    .getByRole("button", { name: "Ajouter au panier · 180 MAD" })
+    .click();
   await page.getByRole("button", { name: /Ouvrir le panier/ }).click();
   await page.waitForTimeout(800);
   const result = await new AxeBuilder({ page })
     .withTags(["wcag2a", "wcag2aa", "wcag21aa"])
     .analyze();
   expect(result.violations).toEqual([]);
+  await page.getByRole("button", { name: "Préparer une demande démo" }).click();
+  const formResult = await new AxeBuilder({ page })
+    .withTags(["wcag2a", "wcag2aa", "wcag21aa"])
+    .analyze();
+  expect(formResult.violations).toEqual([]);
 });

@@ -49,7 +49,7 @@ export const articles: Article[] = [
     kicker: "À cuisiner",
     intro:
       "Une salade de placard qui devient un vrai repas de table, avec du citron, des herbes et un filet d’huile d’olive.",
-    image: "verger",
+    image: "salade",
     minutes: 4,
     products: ["olive-beni-mellal"],
     ingredients: [
@@ -82,7 +82,7 @@ export const articles: Article[] = [
     kicker: "À cuisiner",
     intro:
       "Quelques poires, un peu de miel et un passage au four : un dessert simple, à servir tiède.",
-    image: "rituel",
+    image: "poires",
     minutes: 4,
     products: ["miel-1", "miel-4"],
     ingredients: [
