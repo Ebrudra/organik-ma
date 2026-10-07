@@ -45,3 +45,7 @@ An overlapping early test invocation reused the previous run's server, which the
 ## Unverified / external limitations
 
 The published reference failed HTTP proxy and browser trust checks, so original design/content/assets/cart behavior remain unknown. Authoritative WHO/AAD pages also returned proxy CONNECT 403; no product health claims or purported verified citations were substituted. GitHub Git push succeeded, but API/GraphQL access returned Forbidden and prevented automatic PR creation. No deployment, real payment, merchant submission, physical-phone test or new-task snapshot restoration was performed.
+
+## Cloudflare preview preparation
+
+On 7 October 2026, installed/pinned Wrangler 4.148.0 and added `wrangler.jsonc` for a separate `organik-ma-preview` asset-only Worker. Production build and deployment dry run passed. Local Workers runtime started on port 8787 and `npm run smoke` passed against it, including a directly loaded article, catalog search and cart price. No application code changed in this preparation, so the existing 12-browser-test results remain applicable; runtime-specific readiness was checked separately. Cloudflare account authentication is absent (`wrangler whoami`), and no public deployment was made. Setup, local sandbox accommodations and OAuth MCP instructions are in `docs/CLOUDFLARE-PREVIEW.md`.

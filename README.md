@@ -52,3 +52,7 @@ Cart state is shared across routes and saved under `organik.cart.v1`. Malformed/
 ```sh
 npx prettier --write src tests *.ts *.json index.html docs README.md
 ```
+
+## Cloudflare Workers preview
+
+The separate preview Worker is configured in `wrangler.jsonc`. Run `npm run cf:check` for a build and deployment dry run, `npm run cf:dev` for the local Workers runtime, or `npm run cf:deploy` after authorizing your Cloudflare account. The asset configuration supports SPA routes. For GitHub-connected deployment and official MCP connection instructions, follow [Cloudflare preview guide](docs/CLOUDFLARE-PREVIEW.md). Select **rebuild/organik-storefront**, not the empty main branch, until the rebuild is merged. No public Cloudflare deployment has been performed yet.
