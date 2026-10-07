@@ -1,6 +1,6 @@
 # Cloudflare Workers preview
 
-Deploy this demo as a separate Worker named **organik-ma-preview**. No custom domain, DNS change, backend, payment or old-site replacement is involved. The cart and demo requests remain browser-only. This preview is publicly accessible by default; keep the demo labels and use synthetic contact data.
+Deploy this demo to the Cloudflare Worker named **organik-ma**, as created in the user’s dashboard. No custom domain, DNS change, backend, payment or old-site replacement is involved. The cart and demo requests remain browser-only. This preview is publicly accessible by default; keep the demo labels and use synthetic contact data.
 
 `wrangler.jsonc` serves the Vite `dist/` directory with SPA fallback. Direct routes such as `/luna`, `/boutique` and `/blog/amlou-maison` load the app instead of returning a static 404. Wrangler is pinned in the npm lockfile. No Worker code, database or application secrets are needed.
 
@@ -9,11 +9,11 @@ Deploy this demo as a separate Worker named **organik-ma-preview**. No custom do
 1. Sign in to your Cloudflare account. Open **Workers & Pages** and choose to create a Worker by importing/connecting a Git repository. Interface labels may vary; select the Workers Git integration rather than Pages.
 2. Connect GitHub and grant access to **Ebrudra/organik-ma**. Choose this repository.
 3. Set the build/production branch to **rebuild/organik-storefront**. **main is currently an empty review-base commit** and will not build. After reviewing and merging the rebuild, you can change the connected branch to main.
-4. Use the repository root as the working directory. Set the Worker name to **organik-ma-preview**, matching `wrangler.jsonc`. Use Node 24 when a Node version setting is available.
+4. Use the repository root as the working directory. Set the Worker name to **organik-ma**, matching `wrangler.jsonc`. Use Node 24 when a Node version setting is available.
 5. Set **build command** to `npm run build` and **deploy command** to `npx wrangler deploy`. Cloudflare's Git build environment installs npm dependencies using the lockfile. If your build configuration does not automatically install them, use `npm ci && npm run build` as the build command.
 6. Leave custom domains, routes, databases and app secrets empty. Keep the generated **workers.dev** address enabled. Deploy.
 7. Open the generated Worker URL from the dashboard. Verify navigation and load `/boutique`, `/luna`, `/blog/amlou-maison` directly. Add different argan references to the cart, reload, and submit a synthetic demo request. Its confirmation must say it stays only in this browser.
-8. Later pushes to the connected branch can rebuild the preview automatically. Review Cloudflare build logs when a build fails. To remove the preview, delete only `organik-ma-preview` in Workers & Pages.
+8. Later pushes to the connected branch can rebuild the preview automatically. Review Cloudflare build logs when a build fails. To remove the preview, delete only `organik-ma` in Workers & Pages.
 
 A Cloudflare account/GitHub connection approval is done in your own browser. Do not paste account API tokens into chat. Cloudflare's build integration handles its deployment credentials.
 
@@ -76,3 +76,5 @@ No Cloudflare account connection was available during preparation: `wrangler who
 Wrangler 4.148.0 accepted the configuration and completed `wrangler deploy --dry-run`. Local `wrangler dev` started successfully and the browser smoke check passed against it: hero, combined accented catalog search, cart price, blog, direct recipe route and images.
 
 This sandbox disallows writing the default Wrangler config directory under the agent's home. Validation used a supported `XDG_CONFIG_HOME` override to the ignored `.local/cloudflare-config` directory, plus logs in `/tmp`. This is a local sandbox accommodation; it is not needed in Cloudflare's build environment or most local computers. No TLS verification was disabled. The local runtime's optional `Request.cf` network lookup was unavailable, so Wrangler used its documented placeholder; this asset-only app does not read `Request.cf`.
+
+The dashboard screenshot supplied during setup confirms `rebuild/organik-storefront` is selected in Branch control. Earlier failed builds were labeled `main` and lacked `package.json`; they do not prove the new branch setting is wrong. A new commit on the selected branch should trigger a fresh build. The repository Worker name now matches the dashboard, avoiding the configuration-name warning.

@@ -1,6 +1,6 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "organik-ma-preview",
+  "name": "organik-ma",
   "compatibility_date": "2026-10-07",
   "workers_dev": true,
   "preview_urls": true,
