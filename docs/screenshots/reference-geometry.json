@@ -1,0 +1,434 @@
+{
+  "reference-desktop": [
+    {
+      "class": "brand",
+      "rect": {
+        "x": 79.1875,
+        "y": 51,
+        "width": 155,
+        "height": 66,
+        "top": 51,
+        "right": 234.1875,
+        "bottom": 117,
+        "left": 79.1875
+      }
+    },
+    {
+      "class": "hero ",
+      "rect": {
+        "x": 0,
+        "y": 131,
+        "width": 1440,
+        "height": 620,
+        "top": 131,
+        "right": 1440,
+        "bottom": 751,
+        "left": 0
+      }
+    },
+    {
+      "class": "branded-jar hero-jar",
+      "rect": {
+        "x": 720,
+        "y": 186,
+        "width": 590.40625,
+        "height": 480,
+        "top": 186,
+        "right": 1310.40625,
+        "bottom": 666,
+        "left": 720
+      }
+    },
+    {
+      "class": "collection",
+      "rect": {
+        "x": 0,
+        "y": 819.5,
+        "width": 1440,
+        "height": 983.875,
+        "top": 819.5,
+        "right": 1440,
+        "bottom": 1803.375,
+        "left": 0
+      }
+    },
+    {
+      "class": "story",
+      "rect": {
+        "x": 79.1875,
+        "y": 1818.375,
+        "width": 1281.625,
+        "height": 379.375,
+        "top": 1818.375,
+        "right": 1360.8125,
+        "bottom": 2197.75,
+        "left": 79.1875
+      }
+    }
+  ],
+  "home-desktop": [
+    {
+      "class": "brand",
+      "rect": {
+        "x": 79.1875,
+        "y": 51,
+        "width": 155,
+        "height": 66,
+        "top": 51,
+        "right": 234.1875,
+        "bottom": 117,
+        "left": 79.1875
+      }
+    },
+    {
+      "class": "hero  ",
+      "rect": {
+        "x": 0,
+        "y": 131,
+        "width": 1440,
+        "height": 620,
+        "top": 131,
+        "right": 1440,
+        "bottom": 751,
+        "left": 0
+      }
+    },
+    {
+      "class": "branded-jar hero-jar",
+      "rect": {
+        "x": 720,
+        "y": 186,
+        "width": 590.40625,
+        "height": 480,
+        "top": 186,
+        "right": 1310.40625,
+        "bottom": 666,
+        "left": 720
+      }
+    },
+    {
+      "class": "collection",
+      "rect": {
+        "x": 0,
+        "y": 819.5,
+        "width": 1440,
+        "height": 983.875,
+        "top": 819.5,
+        "right": 1440,
+        "bottom": 1803.375,
+        "left": 0
+      }
+    },
+    {
+      "class": "story",
+      "rect": {
+        "x": 79.1875,
+        "y": 1818.375,
+        "width": 1281.625,
+        "height": 379.375,
+        "top": 1818.375,
+        "right": 1360.8125,
+        "bottom": 2197.75,
+        "left": 79.1875
+      }
+    }
+  ],
+  "boutique-desktop": [
+    {
+      "class": "brand",
+      "rect": {
+        "x": 79.1875,
+        "y": 51,
+        "width": 155,
+        "height": 66,
+        "top": 51,
+        "right": 234.1875,
+        "bottom": 117,
+        "left": 79.1875
+      }
+    }
+  ],
+  "luna-desktop": [
+    {
+      "class": "brand",
+      "rect": {
+        "x": 79.1875,
+        "y": 51,
+        "width": 155,
+        "height": 66,
+        "top": 51,
+        "right": 234.1875,
+        "bottom": 117,
+        "left": 79.1875
+      }
+    },
+    {
+      "class": "hero  ",
+      "rect": {
+        "x": 0,
+        "y": 131,
+        "width": 1440,
+        "height": 700,
+        "top": 131,
+        "right": 1440,
+        "bottom": 831,
+        "left": 0
+      }
+    },
+    {
+      "class": "branded-jar hero-jar",
+      "rect": {
+        "x": 584,
+        "y": 173.5,
+        "width": 560,
+        "height": 560,
+        "top": 173.5,
+        "right": 1144,
+        "bottom": 733.5,
+        "left": 584
+      }
+    },
+    {
+      "class": "collection",
+      "rect": {
+        "x": 0,
+        "y": 899.5,
+        "width": 1440,
+        "height": 983.875,
+        "top": 899.5,
+        "right": 1440,
+        "bottom": 1883.375,
+        "left": 0
+      }
+    },
+    {
+      "class": "story",
+      "rect": {
+        "x": 79.1875,
+        "y": 1898.375,
+        "width": 1281.625,
+        "height": 379.375,
+        "top": 1898.375,
+        "right": 1360.8125,
+        "bottom": 2277.75,
+        "left": 79.1875
+      }
+    }
+  ],
+  "reference-mobile": [
+    {
+      "class": "brand",
+      "rect": {
+        "x": 19.5,
+        "y": 39.5,
+        "width": 120,
+        "height": 56,
+        "top": 39.5,
+        "right": 139.5,
+        "bottom": 95.5,
+        "left": 19.5
+      }
+    },
+    {
+      "class": "hero ",
+      "rect": {
+        "x": 0,
+        "y": 103,
+        "width": 390,
+        "height": 760,
+        "top": 103,
+        "right": 390,
+        "bottom": 863,
+        "left": 0
+      }
+    },
+    {
+      "class": "branded-jar hero-jar",
+      "rect": {
+        "x": 27.296875,
+        "y": 105.5,
+        "width": 335.40625,
+        "height": 350,
+        "top": 105.5,
+        "right": 362.703125,
+        "bottom": 455.5,
+        "left": 27.296875
+      }
+    },
+    {
+      "class": "collection",
+      "rect": {
+        "x": 0,
+        "y": 920,
+        "width": 390,
+        "height": 1255.6875,
+        "top": 920,
+        "right": 390,
+        "bottom": 2175.6875,
+        "left": 0
+      }
+    },
+    {
+      "class": "story",
+      "rect": {
+        "x": 19.5,
+        "y": 2180.6875,
+        "width": 351,
+        "height": 383.875,
+        "top": 2180.6875,
+        "right": 370.5,
+        "bottom": 2564.5625,
+        "left": 19.5
+      }
+    }
+  ],
+  "home-mobile": [
+    {
+      "class": "brand",
+      "rect": {
+        "x": 19.5,
+        "y": 39.5,
+        "width": 120,
+        "height": 56,
+        "top": 39.5,
+        "right": 139.5,
+        "bottom": 95.5,
+        "left": 19.5
+      }
+    },
+    {
+      "class": "hero  ",
+      "rect": {
+        "x": 0,
+        "y": 103,
+        "width": 390,
+        "height": 760,
+        "top": 103,
+        "right": 390,
+        "bottom": 863,
+        "left": 0
+      }
+    },
+    {
+      "class": "branded-jar hero-jar",
+      "rect": {
+        "x": 27.296875,
+        "y": 105.5,
+        "width": 335.40625,
+        "height": 350,
+        "top": 105.5,
+        "right": 362.703125,
+        "bottom": 455.5,
+        "left": 27.296875
+      }
+    },
+    {
+      "class": "collection",
+      "rect": {
+        "x": 0,
+        "y": 920,
+        "width": 390,
+        "height": 1255.6875,
+        "top": 920,
+        "right": 390,
+        "bottom": 2175.6875,
+        "left": 0
+      }
+    },
+    {
+      "class": "story",
+      "rect": {
+        "x": 19.5,
+        "y": 2180.6875,
+        "width": 351,
+        "height": 383.875,
+        "top": 2180.6875,
+        "right": 370.5,
+        "bottom": 2564.5625,
+        "left": 19.5
+      }
+    }
+  ],
+  "boutique-mobile": [
+    {
+      "class": "brand",
+      "rect": {
+        "x": 19.5,
+        "y": 39.5,
+        "width": 120,
+        "height": 56,
+        "top": 39.5,
+        "right": 139.5,
+        "bottom": 95.5,
+        "left": 19.5
+      }
+    }
+  ],
+  "luna-mobile": [
+    {
+      "class": "brand",
+      "rect": {
+        "x": 19.5,
+        "y": 39.5,
+        "width": 120,
+        "height": 56,
+        "top": 39.5,
+        "right": 139.5,
+        "bottom": 95.5,
+        "left": 19.5
+      }
+    },
+    {
+      "class": "hero  ",
+      "rect": {
+        "x": 0,
+        "y": 103,
+        "width": 390,
+        "height": 800,
+        "top": 103,
+        "right": 390,
+        "bottom": 903,
+        "left": 0
+      }
+    },
+    {
+      "class": "branded-jar hero-jar",
+      "rect": {
+        "x": 22.5,
+        "y": 98,
+        "width": 345,
+        "height": 345,
+        "top": 98,
+        "right": 367.5,
+        "bottom": 443,
+        "left": 22.5
+      }
+    },
+    {
+      "class": "collection",
+      "rect": {
+        "x": 0,
+        "y": 960,
+        "width": 390,
+        "height": 1255.6875,
+        "top": 960,
+        "right": 390,
+        "bottom": 2215.6875,
+        "left": 0
+      }
+    },
+    {
+      "class": "story",
+      "rect": {
+        "x": 19.5,
+        "y": 2220.6875,
+        "width": 351,
+        "height": 383.875,
+        "top": 2220.6875,
+        "right": 370.5,
+        "bottom": 2604.5625,
+        "left": 19.5
+      }
+    }
+  ]
+}
