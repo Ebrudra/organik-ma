@@ -10,7 +10,7 @@ Inspected URLs:
 - Its public chunk: https://organik-ma.benhaddouch-elmehdi.chatgpt.site/_next/static/chunks/storefront-CmrWOE8A.js
 - New user-deployed preview: https://organik-ma.privatedriver.workers.dev/
 
-Initial original-site requests failed with proxy CONNECT 403 and browser `ERR_CERT_AUTHORITY_INVALID`. A later chunk request reached an HTTP 401 login page (“Log in to access”, “Continue with ChatGPT”). No authentication was bypassed, historical project ID used, private source recovered or original backend called. Direct preview inspection is also restricted by the environment proxy. Browser verification below uses local servers, not a verified remote Cloudflare deployment.
+Initial original-site requests failed with proxy CONNECT 403 and browser `ERR_CERT_AUTHORITY_INVALID`. A later chunk request reached an HTTP 401 login page (“Log in to access”, “Continue with ChatGPT”). No authentication was bypassed, historical project ID used, private source recovered or original backend called. After pushing the restored branch, HTTPS requests to the new preview returned 200. Its JavaScript, CSS and all five recovered PNGs matched the validated local production bytes; direct Luna, Boutique and recipe routes returned the current SPA. Remote Chromium still fails with `ERR_CERT_AUTHORITY_INVALID`, so visual/interactive browser verification uses local servers.
 
 ## Recovered source material
 
@@ -61,4 +61,4 @@ New recipe text is a proposed replacement, not verified historical content. Nutr
 
 ## Delivery
 
-The user configured the separate Cloudflare Worker `organik-ma` to watch `rebuild/organik-storefront`; pushes can update that preview. Do not replace the original ChatGPT Sites site or change its DNS. GitHub API access previously prevented automatic PR creation; the branch and `docs/PR-DESCRIPTION.md` remain reviewable.
+The user configured the separate Cloudflare Worker `organik-ma` to watch `rebuild/organik-storefront`; pushes can update that preview. Do not replace the original ChatGPT Sites site or change its DNS. Earlier GitHub GraphQL access failed; REST API access now succeeded and created https://github.com/Ebrudra/organik-ma/pull/1. The user-configured preview automatically deployed the restored application commit.
